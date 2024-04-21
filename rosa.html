@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rosa</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            font-family: 'Segoe Script', cursive;
+        }
+        canvas {
+            border: 1px solid #000;
+            margin-top: 20px;
+        }
+        h1 {
+            font-size: 36px;
+            color: #bf0000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Feliz Sant Jordi</h1>
+    <canvas id="rosaCanvas" width="600" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('rosaCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        function drawRose() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 3; // Ajustar la altura de la flor
+
+            // Dibujar tallo
+            ctx.strokeStyle = 'green';
+            ctx.lineWidth = 8;
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY + 250); // Longitud del tallo aumentada
+            ctx.lineTo(centerX, centerY);
+            ctx.stroke();
+
+            // Dibujar hoja
+            ctx.fillStyle = 'green';
+            ctx.beginPath();
+            ctx.moveTo(centerX - 20, centerY + 100);
+            ctx.quadraticCurveTo(centerX - 30, centerY + 110, centerX - 20, centerY + 130); // Ajustar tamaño de la hoja
+            ctx.quadraticCurveTo(centerX, centerY + 110, centerX - 20, centerY + 100); // Ajustar tamaño de la hoja
+            ctx.fill();
+
+            // Dibujar sépalos
+            ctx.fillStyle = 'green';
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.quadraticCurveTo(centerX + 20, centerY - 10, centerX + 30, centerY + 20);
+            ctx.quadraticCurveTo(centerX + 30, centerY + 40, centerX, centerY + 50);
+            ctx.quadraticCurveTo(centerX - 30, centerY + 40, centerX - 30, centerY + 20);
+            ctx.quadraticCurveTo(centerX - 20, centerY - 10, centerX, centerY);
+            ctx.fill();
+
+            // Dibujar pétalos
+            const petalCount = 8;
+            const petalLength = 50; // Ajustar la longitud del pétalo
+            const petalWidth = 10; // Ajustar la anchura del pétalo
+            const angleIncrement = (Math.PI * 2) / petalCount;
+
+            ctx.fillStyle = 'red';
+            for (let angle = 0; angle < Math.PI * 2; angle += angleIncrement) {
+                const x1 = centerX + Math.cos(angle) * petalLength;
+                const y1 = centerY + Math.sin(angle) * petalLength;
+                const x2 = centerX + Math.cos(angle + angleIncrement / 2) * (petalLength + 20); // Ajustar la curva del pétalo
+                const y2 = centerY + Math.sin(angle + angleIncrement / 2) * (petalLength + 20); // Ajustar la curva del pétalo
+                const x3 = centerX + Math.cos(angle + angleIncrement) * petalLength;
+                const y3 = centerY + Math.sin(angle + angleIncrement) * petalLength;
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.bezierCurveTo(x1, y1, x2, y2, x3, y3);
+                ctx.fill();
+            }
+        }
+        
+        drawRose();
+    </script>
+</body>
+</html>
